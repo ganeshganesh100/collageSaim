@@ -1,294 +1,664 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Foody Web - Delicious Delivery</title>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="shortcut icon" href="/assets/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="Foody web " />
-<link rel="manifest" href="/assets/site.webmanifest" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-    /* Reset and general styles for the hero section */
-    .section-hero {
-        position: relative;
-        height: 100vh;
-        width: 100%;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        overflow: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f8f9fa;
+    color:#333;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+header{
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+header .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#ff5722;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+}
+
+nav a:hover{
+    color:#ff5722;
+}
+
+/* HERO */
+
+.section-hero{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+}
+
+.slider-container{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+.slider-item{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:1s;
+}
+
+.slider-item.active{
+    opacity:1;
+}
+
+.hero-gradient-overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+}
+
+.section-hero--content{
+    position:relative;
+    z-index:5;
+    color:#fff;
+    text-align:center;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.hero-subheading{
+    color:#ffc107;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.hero-heading{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.hero-para{
+    font-size:20px;
+    margin-bottom:30px;
+}
+
+.btn{
+    background:#ff5722;
+    color:white;
+    padding:12px 30px;
+    border-radius:30px;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.btn:hover{
+    background:#e64a19;
+}
+
+.slider-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:10;
+    background:rgba(0,0,0,.6);
+    border:none;
+    color:white;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+#prevSlideBtn{left:20px;}
+#nextSlideBtn{right:20px;}
+
+.slider-dots{
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+    z-index:10;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:white;
+    opacity:.5;
+    cursor:pointer;
+}
+
+.dot.active{
+    background:#ff5722;
+    opacity:1;
+}
+
+/* FEATURED FOODS */
+
+section{
+    padding:80px 0;
+}
+
+section h2{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:36px;
+}
+
+.food-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.food-card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+.food-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.food-card h3{
+    margin:15px 0;
+}
+
+.food-card p{
+    color:#ff5722;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.food-card button{
+    margin-bottom:20px;
+    padding:10px 20px;
+    border:none;
+    background:#ff5722;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* CATEGORIES */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+}
+
+.category-card{
+    background:#fff;
+    text-align:center;
+    padding:30px;
+    font-size:24px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.feature{
+    background:white;
+    text-align:center;
+    padding:30px;
+    border-radius:15px;
+}
+
+.feature i{
+    font-size:50px;
+    color:#ff5722;
+    margin-bottom:15px;
+}
+
+/* STATS */
+
+.stats-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.stat-box{
+    background:#ff5722;
+    color:white;
+    text-align:center;
+    padding:30px;
+    border-radius:15px;
+}
+
+.stat-box h2{
+    margin:0;
+}
+
+/* TESTIMONIALS */
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.testimonial{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* NEWSLETTER */
+
+.newsletter{
+    background:#ff5722;
+    color:white;
+    text-align:center;
+}
+
+.newsletter input{
+    width:300px;
+    max-width:90%;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+}
+
+.newsletter button{
+    padding:12px 20px;
+    border:none;
+    background:#222;
+    color:white;
+    border-radius:5px;
+    margin-left:10px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#222;
+    color:white;
+    padding:50px 0;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+footer a{
+    color:white;
+    text-decoration:none;
+}
+
+footer ul{
+    list-style:none;
+}
+
+footer li{
+    margin:10px 0;
+}
+
+.social a{
+    margin-right:15px;
+    font-size:22px;
+}
+
+.copyright{
+    text-align:center;
+    margin-top:30px;
+    border-top:1px solid #444;
+    padding-top:20px;
+}
+
+@media(max-width:768px){
+    .hero-heading{
+        font-size:38px;
     }
 
-    /* Slider container */
-    .slider-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+    nav ul{
+        gap:12px;
     }
-
-    /* Individual slider items (images) */
-    .slider-item {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-    }
-
-    .slider-item.active {
-        opacity: 1;
-    }
-
-    /* Gradient overlay for better text readability */
-    .hero-gradient-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
-        z-index: 1;
-    }
-
-    /* Content on top of the slider */
-    .section-hero--content {
-        position: relative;
-        z-index: 2;
-        max-width: 800px;
-        padding: 1.5rem;
-    }
-
-    .hero-subheading {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: #ffcc00;
-    }
-
-    .hero-heading {
-        font-size: 3.5rem;
-        font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 1rem;
-    }
-
-    .hero-para {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .hero-btn .btn {
-        background-color: #ff6b6b;
-        color: #fff;
-        padding: 0.8rem 2rem;
-        border-radius: 9999px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-    }
-
-    .hero-btn .btn:hover {
-        background-color: #e65c5c;
-        transform: translateY(-2px);
-    }
-
-    /* Slider navigation arrows */
-    .slider-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        border: none;
-        padding: 1rem;
-        cursor: pointer;
-        z-index: 3;
-        font-size: 1.5rem;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s ease;
-    }
-
-    .slider-arrow:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    #prevSlideBtn {
-        left: 1.5rem;
-    }
-
-    #nextSlideBtn {
-        right: 1.5rem;
-    }
-
-    /* Slider navigation dots */
-    .slider-dots {
-        position: absolute;
-        bottom: 1.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .dot {
-        width: 12px;
-        height: 12px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .dot.active {
-        background-color: #ff6b6b;
-        transform: scale(1.2);
-    }
+}
 </style>
-
 </head>
 <body>
-    <header>
-        <div class="container">
-            <img src="/assets/logo.png" alt="Foody Web Logo" width="150">
-            <div class="hamburger-menu">
-                <i class="fas fa-bars"></i>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="./html/cart.html">Products</a></li>
-                    <li><a href="./html/contact.html">Contact</a></li>
-                    <li><a href="./html/login.html">Account</a></li>
-                    <li><a href="./html/addToChart.html"> <i class="fas fa-shopping-cart"></i></a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main>
-        <section id="hero" class="section-hero">
-            <div class="slider-container">
-                <div class="slider-item active" style="background-image: url('assets/burger.jpg');"></div>
-                <div class="slider-item" style="background-image: url('assets/pizza.jpg');"></div>
-                <div class="slider-item" style="background-image: url('assets/chicken.jpg');"></div>
-                <div class="slider-item" style="background-image: url('assets/chicken.jpg');"></div>
-            </div>
+<header>
+    <div class="container">
+        <div class="logo">Foody Web</div>
 
-            <div class="hero-gradient-overlay"></div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Account</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-            <div class="container section-hero--content">
-                <p class="hero-subheading">DELICIOUS FOOD AT YOUR DOORSTEP</p>
-                <h1 class="hero-heading">Welcome to Foody Web</h1>
-                <p class="hero-para">Enjoy a wide variety of meals from your favorite restaurants delivered fast & fresh.</p>
-                <div class="hero-btn">
-                    <a href="./html/cart.html" class="btn">Order Now</a>
-                </div>
-            </div>
+<section class="section-hero">
 
-            <button class="slider-arrow" id="prevSlideBtn" aria-label="Previous slide">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="slider-arrow" id="nextSlideBtn" aria-label="Next slide">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+    <div class="slider-container">
+        <div class="slider-item active" style="background-image:url('assets/burger.jpg')"></div>
+        <div class="slider-item" style="background-image:url('assets/pizza.jpg')"></div>
+        <div class="slider-item" style="background-image:url('assets/chicken.jpg')"></div>
+    </div>
 
-            <div class="slider-dots" id="sliderDots" role="tablist"></div>
-        </section>
-    </main>
+    <div class="hero-gradient-overlay"></div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Foody WB. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="container section-hero--content">
+        <p class="hero-subheading">DELICIOUS FOOD AT YOUR DOORSTEP</p>
+        <h1 class="hero-heading">Welcome To Foody Web</h1>
+        <p class="hero-para">
+            Fresh meals delivered quickly and safely.
+        </p>
+        <a href="#" class="btn">Order Now</a>
+    </div>
 
-    <script src="/js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const slides = document.querySelectorAll('.slider-item');
-            const dotsContainer = document.getElementById('sliderDots');
-            const prevBtn = document.getElementById('prevSlideBtn');
-            const nextBtn = document.getElementById('nextSlideBtn');
-            let currentIndex = 0;
-            let intervalId;
+    <button class="slider-arrow" id="prevSlideBtn">
+        <i class="fas fa-chevron-left"></i>
+    </button>
 
-            // Create navigation dots
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    goToSlide(index);
-                    resetAutoPlay();
-                });
-                dotsContainer.appendChild(dot);
-            });
+    <button class="slider-arrow" id="nextSlideBtn">
+        <i class="fas fa-chevron-right"></i>
+    </button>
 
-            const dots = document.querySelectorAll('.dot');
+    <div class="slider-dots" id="sliderDots"></div>
 
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
-            }
+</section>
 
-            function goToSlide(index) {
-                currentIndex = index;
-                showSlide(currentIndex);
-            }
+<section>
+<div class="container">
 
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-            }
+<h2>Popular Foods</h2>
 
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                showSlide(currentIndex);
-            }
+<div class="food-grid">
 
-            function resetAutoPlay() {
-                clearInterval(intervalId);
-                intervalId = setInterval(nextSlide, 5000);
-            }
+<div class="food-card">
+<img src="assets/burger.jpg">
+<h3>Classic Burger</h3>
+<p>Nrs 450</p>
+<button>Add To Cart</button>
+</div>
 
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                resetAutoPlay();
-            });
+<div class="food-card">
+<img src="assets/pizza.jpg">
+<h3>Pizza</h3>
+<p>Nrs 850</p>
+<button>Add To Cart</button>
+</div>
 
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                resetAutoPlay();
-            });
+<div class="food-card">
+<img src="assets/chicken.jpg">
+<h3>Chicken BBQ</h3>
+<p>Nrs 650</p>
+<button>Add To Cart</button>
+</div>
 
-            intervalId = setInterval(nextSlide, 5000); // Start autoplay
-        });
-    </script>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+
+<h2>Food Categories</h2>
+
+<div class="category-grid">
+<div class="category-card">🍔 Burgers</div>
+<div class="category-card">🍕 Pizza</div>
+<div class="category-card">🍗 Chicken</div>
+<div class="category-card">🥤 Drinks</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="container">
+
+<h2>Why Choose Us</h2>
+
+<div class="features">
+
+<div class="feature">
+<i class="fas fa-shipping-fast"></i>
+<h3>Fast Delivery</h3>
+<p>Delivered quickly to your location.</p>
+</div>
+
+<div class="feature">
+<i class="fas fa-utensils"></i>
+<h3>Fresh Food</h3>
+<p>Made from quality ingredients.</p>
+</div>
+
+<div class="feature">
+<i class="fas fa-wallet"></i>
+<h3>Affordable</h3>
+<p>Best prices for everyone.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="container">
+
+<h2>Statistics</h2>
+
+<div class="stats-container">
+
+<div class="stat-box">
+<h2>500+</h2>
+<p>Customers</p>
+</div>
+
+<div class="stat-box">
+<h2>100+</h2>
+<p>Food Items</p>
+</div>
+
+<div class="stat-box">
+<h2>50+</h2>
+<p>Restaurants</p>
+</div>
+
+<div class="stat-box">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="container">
+
+<h2>Customer Reviews</h2>
+
+<div class="testimonial-grid">
+
+<div class="testimonial">
+<p>"Amazing food and delivery."</p>
+<h4>- Ram Sharma</h4>
+</div>
+
+<div class="testimonial">
+<p>"Best food ordering website."</p>
+<h4>- Sita Gurung</h4>
+</div>
+
+<div class="testimonial">
+<p>"Affordable and delicious."</p>
+<h4>- Hari Thapa</h4>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="newsletter">
+<div class="container">
+
+<h2>Subscribe For Offers</h2>
+
+<form>
+<input type="email" placeholder="Enter email">
+<button>Subscribe</button>
+</form>
+
+</div>
+</section>
+
+<footer>
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+<h3>Foody Web</h3>
+<p>Fresh food delivered to your doorstep.</p>
+</div>
+
+<div>
+<h3>Links</h3>
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#">Products</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</div>
+
+<div class="social">
+<h3>Follow Us</h3>
+<a href="#"><i class="fab fa-facebook"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 Foody Web. All Rights Reserved.
+</div>
+
+</div>
+</footer>
+
+<script>
+const slides = document.querySelectorAll('.slider-item');
+const dotsContainer = document.getElementById('sliderDots');
+
+let currentSlide = 0;
+
+slides.forEach((slide,index)=>{
+    const dot=document.createElement('div');
+    dot.classList.add('dot');
+
+    if(index===0) dot.classList.add('active');
+
+    dot.addEventListener('click',()=>{
+        showSlide(index);
+    });
+
+    dotsContainer.appendChild(dot);
+});
+
+function showSlide(index){
+
+    slides.forEach(slide=>{
+        slide.classList.remove('active');
+    });
+
+    document.querySelectorAll('.dot').forEach(dot=>{
+        dot.classList.remove('active');
+    });
+
+    slides[index].classList.add('active');
+    document.querySelectorAll('.dot')[index].classList.add('active');
+
+    currentSlide=index;
+}
+
+document.getElementById('nextSlideBtn').onclick=()=>{
+    showSlide((currentSlide+1)%slides.length);
+};
+
+document.getElementById('prevSlideBtn').onclick=()=>{
+    showSlide((currentSlide-1+slides.length)%slides.length);
+};
+
+setInterval(()=>{
+    showSlide((currentSlide+1)%slides.length);
+},5000);
+</script>
+
 </body>
 </html>
+```
